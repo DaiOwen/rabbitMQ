@@ -5,3 +5,10 @@ RabbitMQ是一个开源的消息代理何队列服务器，用来通过普通协
 2、消息的异步化、序列化。
 3、连接池化，高性能的实现。
 4、完备的补偿机制。
+
+RabbitMQ is an open source Message broker and Queuing server, which is used to share data between disparate applications through common Protocol. RabbitMQ is written in Erlang language, and it is based on AMQP(Advanced Message Queuing Protocol) Protocol.
+This project mainly encapsulates RabbitMQ, the basic component of which has the following key points:
+1. Send the message quickly, confirm the message and delay the message.
+2. Asynchronous and serialized messages.
+3, connection pooling, high-performance implementation.
+4. Complete compensation mechanism.
