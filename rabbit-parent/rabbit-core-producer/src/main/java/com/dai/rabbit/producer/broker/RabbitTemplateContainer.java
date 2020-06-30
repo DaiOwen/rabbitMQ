@@ -2,6 +2,9 @@ package com.dai.rabbit.producer.broker;
 
 import com.dai.api.Message;
 import com.dai.api.MessageType;
+import com.dai.rabbit.common.convert.GenericMessageConverter;
+import com.dai.rabbit.common.convert.RabbitMessageConverter;
+import com.dai.rabbit.common.serializer.Serializer;
 import com.dai.rabbit.common.serializer.SerializerFactory;
 import com.dai.rabbit.common.serializer.impl.JacksonSerializerFactory;
 import com.google.common.base.Preconditions;
@@ -48,11 +51,17 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
         if(rabbitTemplate != null) {
             return rabbitTemplate;
         }
-        log.info("#RabbitTemplateContainer.getTemplate# topic: {} is not exists, create new one");
+        log.info("#RabbitTemplateContainer.getTemplate# topic: {} is not exists, create new one",topic);
         RabbitTemplate newTemplate = new RabbitTemplate(connectionFactory);
         newTemplate.setExchange(topic);
         newTemplate.setRoutingKey(message.getRoutingKey());
         newTemplate.setRetryTemplate(new RetryTemplate());
+
+        // 添加序列化反序列化converter对象
+        Serializer serializer = serializerFactory.create();
+        GenericMessageConverter gmc = new GenericMessageConverter(serializer);
+        RabbitMessageConverter rmc = new RabbitMessageConverter(gmc);
+        newTemplate.setMessageConverter(rmc);
 
         String messageType = message.getMessageType();
         if(!MessageType.RAPID.equals(messageType)) {
