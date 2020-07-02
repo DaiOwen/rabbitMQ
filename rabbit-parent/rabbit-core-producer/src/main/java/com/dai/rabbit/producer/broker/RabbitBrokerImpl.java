@@ -37,7 +37,7 @@ public class RabbitBrokerImpl implements RabbitBroker {
      * @param message 消息
      */
     private void sendKernel(Message message) {
-        AsyncBaseQueue.submit((Runnable) () -> {
+        AsyncBaseQueue.submit( () -> {
             CorrelationData correlationData =
                     new CorrelationData(String.format("%s#%s#%s",
                     message.getMessageId(),
@@ -54,7 +54,8 @@ public class RabbitBrokerImpl implements RabbitBroker {
 
     @Override
     public void confirmSend(Message message) {
-
+        message.setMessageType(MessageType.CONFIRM);
+        sendKernel(message);
     }
 
     @Override
