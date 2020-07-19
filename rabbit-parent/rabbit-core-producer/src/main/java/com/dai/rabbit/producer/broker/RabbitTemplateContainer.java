@@ -65,6 +65,7 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
 
         String messageType = message.getMessageType();
         if(!MessageType.RAPID.equals(messageType)) {
+            //确认消息和可靠性消息会做消息的回调确认
             newTemplate.setConfirmCallback(this);
         }
         rabbitMap.putIfAbsent(topic,newTemplate);
