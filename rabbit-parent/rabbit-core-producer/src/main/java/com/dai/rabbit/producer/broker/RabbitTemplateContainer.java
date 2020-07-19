@@ -7,6 +7,7 @@ import com.dai.rabbit.common.convert.RabbitMessageConverter;
 import com.dai.rabbit.common.serializer.Serializer;
 import com.dai.rabbit.common.serializer.SerializerFactory;
 import com.dai.rabbit.common.serializer.impl.JacksonSerializerFactory;
+import com.dai.rabbit.producer.service.MessageStoreService;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
